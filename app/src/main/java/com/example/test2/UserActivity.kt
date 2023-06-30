@@ -9,7 +9,7 @@ class UserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)
-        setContentView(binding.root) // this line is changed
+        setContentView(binding.root) //전달받은 parameter 정보를 바탕으로 보여주도록 함
 
         val intent = this.intent
         if (intent != null) {
