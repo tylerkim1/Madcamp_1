@@ -5,11 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.test2.databinding.ActivityUserBinding
 
 class UserActivity : AppCompatActivity() {
-    var binding: ActivityUserBinding? = null
+    private lateinit var binding: ActivityUserBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_user)
+        setContentView(binding.root) // this line is changed
+
         val intent = this.intent
         if (intent != null) {
             val name = intent.getStringExtra("name")
