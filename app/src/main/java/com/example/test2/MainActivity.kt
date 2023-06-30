@@ -1,11 +1,17 @@
 package com.example.test2
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
+import android.widget.TabHost
+import android.widget.TabHost.TabSpec
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
-import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import androidx.core.content.ContextCompat
+import android.graphics.drawable.GradientDrawable
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,11 +28,42 @@ class MainActivity : AppCompatActivity() {
 
         adapter = FragmentPageAdapter(supportFragmentManager , lifecycle)
 
-        tabLayout.addTab(tabLayout.newTab().setText("First"))
-        tabLayout.addTab(tabLayout.newTab().setText("Second"))
-        tabLayout.addTab(tabLayout.newTab().setText("Third"))
+        tabLayout.addTab(tabLayout.newTab())
+        tabLayout.addTab(tabLayout.newTab())
+        tabLayout.addTab(tabLayout.newTab())
+
+
 
         viewPager2.adapter = adapter
+
+        val tabColors = arrayOf(R.color.one, R.color.two, R.color.three)
+        val tabIcons = arrayOf(
+            R.drawable.phone,
+            R.drawable.gallery,
+            R.drawable.diary
+        )
+        for (i in 0 until tabLayout.tabCount) {
+            val tab = tabLayout.getTabAt(i)
+            tab?.let {
+                val tabView = it.view
+                it.setIcon(tabIcons[i])
+
+
+                val tabBackground = GradientDrawable()
+                val cornerRadius = resources.getDimensionPixelSize(R.dimen.tab_corner_radius).toFloat()
+                tabBackground.cornerRadii = floatArrayOf(
+                    cornerRadius, cornerRadius,
+                    cornerRadius, cornerRadius,
+                    0f, 0f,
+                    0f, 0f
+                )
+
+                tabBackground.setColor(ContextCompat.getColor(this, tabColors[i]))
+
+                tabView?.background = tabBackground
+            }
+        }
+
 
         tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {

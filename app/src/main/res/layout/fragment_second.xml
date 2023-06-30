@@ -3,15 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/two"
     tools:context=".SecondFragment">
 
-    <TextView
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Second Fragment"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="22sp"/>
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <!--recycler view for displaying the list of images-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/idRVImages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
 
 </FrameLayout>
