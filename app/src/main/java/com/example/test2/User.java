@@ -1,7 +1,6 @@
 package com.example.test2;
 
 public class User {
-
     String name, phoneNo, info;
     int imageId;
 

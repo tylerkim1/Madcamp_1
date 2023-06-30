@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.content.Intent
 import android.widget.AdapterView
-import androidx.appcompat.app.AppCompatActivity
-import com.example.test2.databinding.ActivityMainBinding
 import com.example.test2.databinding.FragmentFirstBinding
+import org.json.JSONArray
+import java.io.IOException
 
 class FirstFragment : Fragment() {
 
@@ -27,50 +27,55 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val imageId = intArrayOf(
-            R.drawable.person,
-            R.drawable.person,
-            R.drawable.person,
-            R.drawable.person,
-            R.drawable.person,
-            R.drawable.person,
-            R.drawable.person,
-            R.drawable.person,
-            R.drawable.person
-        )
-        val name = arrayOf(
-            "김태형", "김태형", "김태형", "김태형", "김태형",
-            "김태형", "김태형", "김태형", "김태형"
-        )
-        val phoneNo = arrayOf(
-            "010-0000-0000", "010-0000-0000", "010-0000-0000", "010-0000-0000", "010-0000-0000",
-            "010-0000-0000", "010-0000-0000", "010-0000-0000", "010-0000-0000"
-        )
-        val info = arrayOf(
-            "KAIST 19학번", "KAIST 19학번", "KAIST 19학번", "KAIST 19학번", "KAIST 19학번",
-            "KAIST 19학번", "KAIST 19학번", "KAIST 19학번", "KAIST 19학번"
-        )
+        try {
+            val inputStream = requireContext().assets.open("profile.json")
+            val size = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            inputStream.close()
 
-        val userArrayList = ArrayList<User>()
+            val json = String(buffer, Charsets.UTF_8)
 
-        for (i in imageId.indices) {
-            val user = User(name[i], phoneNo[i], info[i], imageId[i])
-            userArrayList.add(user)
-        }
+            val jsonArray = JSONArray(json)
 
-        val listAdapter = ListAdapter(requireContext(), userArrayList)
+            val imageId = ArrayList<Int>()
+            val name = ArrayList<String>()
+            val phoneNo = ArrayList<String>()
+            val info = ArrayList<String>()
 
-        binding.listview.adapter = listAdapter
-        binding.listview.isClickable = true
-        binding.listview.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, view, position, id ->
-                val intent = Intent(requireContext(), UserActivity::class.java)
-                intent.putExtra("name", name[position])
-                intent.putExtra("phone", phoneNo[position])
-                intent.putExtra("info", info[position])
-                intent.putExtra("imageid", imageId[position])
-                startActivity(intent)
+            for (i in 0 until jsonArray.length()) {
+                val jsonObject = jsonArray.getJSONObject(i)
+                val imageName = jsonObject.getString("imageName")
+                imageId.add(resources.getIdentifier(imageName, "drawable", requireContext().packageName))
+                name.add(jsonObject.getString("name"))
+                phoneNo.add(jsonObject.getString("phoneNo"))
+                info.add(jsonObject.getString("info"))
             }
+
+            val userArrayList = ArrayList<User>()
+
+            for (i in imageId.indices) {
+                val user = User(name[i], phoneNo[i], info[i], imageId[i])
+                userArrayList.add(user)
+            }
+
+            val listAdapter = ListAdapter(requireContext(), userArrayList)
+
+            binding.listview.adapter = listAdapter
+            binding.listview.isClickable = true
+            binding.listview.onItemClickListener =
+                AdapterView.OnItemClickListener { parent, view, position, id ->
+                    val intent = Intent(requireContext(), UserActivity::class.java)
+                    intent.putExtra("name", name[position])
+                    intent.putExtra("phone", phoneNo[position])
+                    intent.putExtra("info", info[position])
+                    intent.putExtra("imageid", imageId[position])
+                    startActivity(intent)
+                }
+        } catch (e: IOException) {
+            // 파일 읽기 오류 처리
+            e.printStackTrace()
+        }
     }
 
     override fun onDestroyView() {

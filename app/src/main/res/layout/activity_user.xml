@@ -11,7 +11,7 @@
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/person"
+        android:src="@drawable/profile"
         android:layout_marginTop="20dp"/>
 
     <TextView

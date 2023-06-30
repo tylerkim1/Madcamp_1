@@ -15,11 +15,11 @@ class UserActivity : AppCompatActivity() {
             val name = intent.getStringExtra("name")
             val phone = intent.getStringExtra("phone")
             val info = intent.getStringExtra("info")
-            val imageid = intent.getIntExtra("imageid", R.drawable.person)
+            val imageId = intent.getIntExtra("imageid", R.drawable.profile)
             binding!!.nameProfile.text = name
             binding!!.phoneProfile.text = phone
             binding!!.infoProfile.text = info
-            binding!!.profileImage.setImageResource(imageid)
+            binding!!.profileImage.setImageResource(imageId)
         }
     }
 }
