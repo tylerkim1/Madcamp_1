@@ -5,14 +5,22 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="10dp"
-    android:elevation="4dp"
-    app:cardCornerRadius="30dp"
+    android:layout_margin="20dp"
+    app:cardCornerRadius="5dp"
+   android:background="@drawable/border_outer"
     app:cardBackgroundColor="#FFFFFF"
     app:cardUseCompatPadding="true"
 
     >
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:elevation="20dp"
+        android:orientation="vertical"
+
+        >
     <!--Image view for displaying the image
         in our card layout in recycler view-->
     <ImageView
@@ -23,5 +31,6 @@
         android:scaleType="centerCrop"
         android:src = "@drawable/logo"
         />
+</FrameLayout>
 
 </androidx.cardview.widget.CardView>

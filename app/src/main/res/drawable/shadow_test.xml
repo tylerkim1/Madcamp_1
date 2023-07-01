@@ -1,4 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
 
-</selector>
+    >
+
+    <!-- Drop Shadow Stack -->
+
+
+
+    <item>
+        <shape>
+            <padding
+                android:bottom="2dp"
+                android:right="2dp" />
+
+            <solid android:color="#0BCCCCCC" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <padding
+                android:bottom="2dp"
+
+                android:right="2dp"
+  />
+
+            <solid android:color="#0DCCCCCC" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <padding
+                android:bottom="2dp"
+
+                android:right="2dp"
+    />
+
+            <solid android:color="#10CCCCCC" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <padding
+                android:bottom="2.5dp"
+
+                android:right="2.5dp"
+ />
+
+            <solid android:color="#12CCCCCC" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <padding
+                android:bottom="2.5dp"
+
+                android:right="2.5dp"
+ />
+
+            <solid android:color="#15CCCCCC" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <padding
+                android:bottom="2.5dp"
+
+                android:right="2.5dp"
+ />
+
+            <solid android:color="#17CCCCCC" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <padding
+                android:bottom="2.5dp"
+
+                android:right="2.5dp"
+ />
+
+            <solid android:color="#1ACCCCCC" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+
+    <!-- Background -->
+    <item>
+        <shape>
+
+            <solid android:color="#F4E2D3" /> <!-- 테두리 내부를 투명하게 설정 -->
+            <corners android:radius="5dp" />
+            <stroke
+                android:width="30dp"
+                android:color="#FFFFFF" />
+
+            android:color="@android:color/white" />
+        </shape>
+    </item>
+
+</layer-list>
