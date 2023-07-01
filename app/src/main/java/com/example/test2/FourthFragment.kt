@@ -17,8 +17,9 @@ import android.os.Environment
 import android.provider.ContactsContract
 import android.provider.MediaStore
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.test2.databinding.FragmentFourthBinding
-
+import androidx.recyclerview.widget.RecyclerView
 
 class FourthFragment : Fragment() {
     private val PERMISSION_REQUEST_CODE = 300
@@ -26,6 +27,8 @@ class FourthFragment : Fragment() {
     private var _binding: FragmentFourthBinding? = null
     private val binding get() = _binding!!
 
+    private var contactsRV: RecyclerView? = null
+    private var contactRVAdapter: ContactRecyclerViewAdapter? = null
 
     private fun checkPermission2(): Boolean {
         val result2 = ContextCompat.checkSelfPermission(
@@ -46,6 +49,7 @@ class FourthFragment : Fragment() {
             requestPermission()
         }
     }
+
     private fun requestPermission() {
         // Request the read external storage permission.
         ActivityCompat.requestPermissions(
@@ -83,6 +87,24 @@ class FourthFragment : Fragment() {
         return contactsList
     }
 
+    private fun prepareRecyclerView() {
+        // Prepare the RecyclerView.
+        contactRVAdapter = ContactRecyclerViewAdapter(requireContext(), getContacts())
+        val manager = LinearLayoutManager(requireContext())
+        contactsRV?.layoutManager = manager
+        contactsRV?.adapter = contactRVAdapter
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Initialize RecyclerView
+        contactsRV = binding.contactsRecyclerView
+
+        // Request permissions and prepare RecyclerView
+        requestPermissions2()
+        prepareRecyclerView()
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -95,7 +117,10 @@ class FourthFragment : Fragment() {
                     // 연락처 권한이 승인되었을 경우 연락처 관련 작업 수행
                     Toast.makeText(requireContext(), "Contact permissions granted..", Toast.LENGTH_SHORT).show()
                     // 연락처 처리 작업 수행
-                    getContacts()
+                    val contacts = getContacts()
+
+                    // Update RecyclerView with new data
+                    contactRVAdapter?.setContacts(contacts)
                 } else {
                     Toast.makeText(
                         requireContext(),
@@ -106,16 +131,20 @@ class FourthFragment : Fragment() {
             }
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFourthBinding.inflate(inflater, container, false)
-        requestPermissions2()
         return binding.root
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
+
 
