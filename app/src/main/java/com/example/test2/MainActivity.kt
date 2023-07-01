@@ -1,10 +1,7 @@
 package com.example.test2
 
-import android.graphics.Color
+
 import android.os.Bundle
-import android.view.View
-import android.widget.TabHost
-import android.widget.TabHost.TabSpec
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
@@ -31,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         tabLayout.addTab(tabLayout.newTab())
         tabLayout.addTab(tabLayout.newTab())
         tabLayout.addTab(tabLayout.newTab())
+
 
 
 
