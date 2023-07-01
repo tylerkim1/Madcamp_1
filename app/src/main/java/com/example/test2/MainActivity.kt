@@ -28,17 +28,19 @@ class MainActivity : AppCompatActivity() {
         tabLayout.addTab(tabLayout.newTab())
         tabLayout.addTab(tabLayout.newTab())
         tabLayout.addTab(tabLayout.newTab())
+        tabLayout.addTab(tabLayout.newTab())
 
 
 
 
         viewPager2.adapter = adapter
 
-        val tabColors = arrayOf(R.color.one, R.color.two, R.color.three)
+        val tabColors = arrayOf(R.color.one, R.color.two, R.color.three, R.color.one)
         val tabIcons = arrayOf(
             R.drawable.phone,
             R.drawable.gallery,
-            R.drawable.diary
+            R.drawable.diary,
+            R.drawable.phone
         )
         for (i in 0 until tabLayout.tabCount) {
             val tab = tabLayout.getTabAt(i)
