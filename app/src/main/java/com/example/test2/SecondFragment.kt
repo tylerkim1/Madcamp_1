@@ -39,7 +39,9 @@ class SecondFragment : Fragment() {
         // Check if the permissions are granted or not and return the result.
         val result = ContextCompat.checkSelfPermission(
             requireActivity().applicationContext,
-            Manifest.permission.READ_EXTERNAL_STORAGE
+            //Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.READ_MEDIA_IMAGES
+
         )
         return result == PackageManager.PERMISSION_GRANTED
     }
@@ -59,7 +61,8 @@ class SecondFragment : Fragment() {
         // Request the read external storage permission.
         ActivityCompat.requestPermissions(
             requireActivity(),
-            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+            //arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+            arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
             PERMISSION_REQUEST_CODE
         )
     }
@@ -67,7 +70,7 @@ class SecondFragment : Fragment() {
     private fun prepareRecyclerView() {
         // Prepare the RecyclerView.
         imageRVAdapter = RecyclerViewAdapter(requireContext(), imagePaths!!)
-        val manager = GridLayoutManager(requireContext(), 3)
+        val manager = GridLayoutManager(requireContext(), 2)
         imagesRV?.layoutManager = manager
         imagesRV?.adapter = imageRVAdapter
     }
@@ -80,7 +83,7 @@ class SecondFragment : Fragment() {
                 MediaStore.Images.Media.DATA,
                 MediaStore.Images.Media._ID
             )
-            val orderBy = MediaStore.Images.Media._ID
+            val orderBy = MediaStore.Images.Media.DATE_ADDED + " DESC"
             val cursor: Cursor? = requireActivity().contentResolver.query(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 columns,

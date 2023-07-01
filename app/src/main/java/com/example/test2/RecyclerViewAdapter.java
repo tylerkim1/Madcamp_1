@@ -45,7 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         if (imgFile.exists()) {
 
             // if the file exists then we are displaying that file in our image view using picasso library.
-            Picasso.get().load(imgFile).placeholder(R.drawable.ic_launcher_background).into(holder.imageIV);
+            Picasso.get().load(imgFile).placeholder(R.drawable.loading).into(holder.imageIV);
 
             // on below line we are adding click listener to our item of recycler view.
             holder.itemView.setOnClickListener(new View.OnClickListener() {
