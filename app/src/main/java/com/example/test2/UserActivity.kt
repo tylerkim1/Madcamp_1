@@ -16,7 +16,7 @@ class UserActivity : AppCompatActivity() {
             val name = intent.getStringExtra("name")
             val phone = intent.getStringExtra("phone")
             val info = intent.getStringExtra("info")
-            val imageId = intent.getIntExtra("imageid", R.drawable.profile)
+            val imageId = intent.getIntExtra("imageid", R.drawable.profile1)
             binding!!.nameProfile.text = name
             binding!!.phoneProfile.text = phone
             binding!!.infoProfile.text = info

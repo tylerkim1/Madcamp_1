@@ -1,54 +1,54 @@
 [
   {
-    "imageName": "profile",
+    "imageName": "profile1",
     "name": "심수연",
     "phoneNo": "010-1414-2121",
     "info": "GIST 21학번"
   },
   {
-    "imageName": "person",
+    "imageName": "profile2",
     "name": "김태형",
     "phoneNo": "010-0000-1234",
     "info": "KAIST 19학번"
   },
   {
-    "imageName": "profile",
+    "imageName": "profile1",
     "name": "이순신",
     "phoneNo": "010-3333-4444",
     "info": "SNU 19학번"
   },
   {
-    "imageName": "profile",
+    "imageName": "person",
     "name": "김철수",
     "phoneNo": "010-5555-6666",
     "info": "Yonsei 18학번"
   },
   {
-    "imageName": "profile",
+    "imageName": "profile1",
     "name": "홍길동",
     "phoneNo": "010-1111-2222",
     "info": "KAIST 20학번"
   },
   {
-    "imageName": "profile",
+    "imageName": "profile2",
     "name": "장영실",
     "phoneNo": "010-9999-0000",
     "info": "POSTECH 16학번"
   },
   {
-    "imageName": "profile",
+    "imageName": "profile2",
     "name": "유관순",
     "phoneNo": "010-1234-5678",
     "info": "Hanyang 15학번"
   },
   {
-    "imageName": "profile",
+    "imageName": "profile1",
     "name": "강감찬",
     "phoneNo": "010-9876-5432",
     "info": "Konkuk 14학번"
   },
   {
-    "imageName": "profile",
+    "imageName": "person",
     "name": "세종대왕",
     "phoneNo": "010-1111-9999",
     "info": "Sejong 13학번"

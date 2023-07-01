@@ -6,13 +6,9 @@
     android:background="@color/three"
     tools:context=".ThirdFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Third Fragment"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="22sp"/>
+        android:layout_height="match_parent" />
 
 </FrameLayout>

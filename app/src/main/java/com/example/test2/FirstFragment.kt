@@ -28,14 +28,13 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         try {
-            val inputStream = requireContext().assets.open("profile.json")
+            val inputStream = requireContext().assets.open("profile.json") // 사람의 이름, 연락처, 정보, 사진이 담긴 json 파일이다.
             val size = inputStream.available()
             val buffer = ByteArray(size)
             inputStream.read(buffer)
             inputStream.close()
 
             val json = String(buffer, Charsets.UTF_8)
-
             val jsonArray = JSONArray(json)
 
             val imageId = ArrayList<Int>()
