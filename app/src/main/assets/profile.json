@@ -6,7 +6,7 @@
     "info": "GIST 21학번"
   },
   {
-    "imageName": "person",
+    "imageName": "profile2",
     "name": "김태형",
     "phoneNo": "010-0000-1234",
     "info": "KAIST 19학번"
@@ -18,7 +18,7 @@
     "info": "SNU 19학번"
   },
   {
-    "imageName": "profile1",
+    "imageName": "person",
     "name": "김철수",
     "phoneNo": "010-5555-6666",
     "info": "Yonsei 18학번"
@@ -30,13 +30,13 @@
     "info": "KAIST 20학번"
   },
   {
-    "imageName": "profile1",
+    "imageName": "profile2",
     "name": "장영실",
     "phoneNo": "010-9999-0000",
     "info": "POSTECH 16학번"
   },
   {
-    "imageName": "profile1",
+    "imageName": "profile2",
     "name": "유관순",
     "phoneNo": "010-1234-5678",
     "info": "Hanyang 15학번"
@@ -48,7 +48,7 @@
     "info": "Konkuk 14학번"
   },
   {
-    "imageName": "profile1",
+    "imageName": "person",
     "name": "세종대왕",
     "phoneNo": "010-1111-9999",
     "info": "Sejong 13학번"
