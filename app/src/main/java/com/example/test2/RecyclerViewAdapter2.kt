@@ -1,5 +1,6 @@
 package com.example.test2
 
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
+class RecyclerViewAdapter2 : RecyclerView.Adapter<RecyclerViewAdapter2.ViewHolder>() {
 
     private val itemDetails = arrayOf(
         "@노가은 과 함께 방문한 관광명소. 함께라서 더 즐거운 시간이었다. 언젠가 다시 가게 된다면 바닷가를 조금 더 봐야겠다. 정말 아름다운 풍경이었다. @최은서 와 함께해서 더 재밌었다. 부산의 앞바다에서 풍겨오는 바다내음은 어딘가 모를 그리움을 불러 일으키고 있었습니다. @노가은 과 함께 방문한 관광명소. 함께라서 더 즐거운 시간이었다. 언젠가 다시 가게 된다면 바닷가를 조금 더 봐야겠다. 정말 아름다운 풍경이었다. @최은서 와 함께해서 더 재밌었다. 부산의 앞바다에서 풍겨오는 바다내음은 어딘가 모를 그리움을 불러 일으키고 있었습니다.",
@@ -45,6 +46,7 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.textDes.text = itemDetails[position]
         holder.image.setImageResource(itemImages[position])
+        holder.textDes.movementMethod = ScrollingMovementMethod()
 
 //        holder.itemView.setOnClickListener { v: View ->
 //

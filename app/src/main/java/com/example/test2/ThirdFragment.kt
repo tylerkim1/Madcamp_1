@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 class ThirdFragment : Fragment() {
 
     private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>? = null
+    private var adapter: RecyclerView.Adapter<RecyclerViewAdapter2.ViewHolder>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +29,7 @@ class ThirdFragment : Fragment() {
         layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
 
-        adapter = RecyclerViewAdapter()
+        adapter = RecyclerViewAdapter2()
         recyclerView.adapter = adapter
     }
 
