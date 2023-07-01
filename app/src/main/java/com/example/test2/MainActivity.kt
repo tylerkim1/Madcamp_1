@@ -12,7 +12,6 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import androidx.core.content.ContextCompat
 import android.graphics.drawable.GradientDrawable
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var tabLayout: TabLayout
@@ -31,15 +30,15 @@ class MainActivity : AppCompatActivity() {
         tabLayout.addTab(tabLayout.newTab())
         tabLayout.addTab(tabLayout.newTab())
         tabLayout.addTab(tabLayout.newTab())
-
-
+        tabLayout.addTab(tabLayout.newTab())
 
         viewPager2.adapter = adapter
 
-        val tabColors = arrayOf(R.color.one, R.color.two, R.color.three)
+        val tabColors = arrayOf(R.color.one, R.color.two, R.color.three, R.color.three)
         val tabIcons = arrayOf(
             R.drawable.phone,
             R.drawable.gallery,
+            R.drawable.diary,
             R.drawable.diary
         )
         for (i in 0 until tabLayout.tabCount) {
@@ -47,7 +46,6 @@ class MainActivity : AppCompatActivity() {
             tab?.let {
                 val tabView = it.view
                 it.setIcon(tabIcons[i])
-
 
                 val tabBackground = GradientDrawable()
                 val cornerRadius = resources.getDimensionPixelSize(R.dimen.tab_corner_radius).toFloat()

@@ -46,13 +46,6 @@ class RecyclerViewAdapter2 : RecyclerView.Adapter<RecyclerViewAdapter2.ViewHolde
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.textDes.text = itemDetails[position]
         holder.image.setImageResource(itemImages[position])
-        holder.textDes.movementMethod = ScrollingMovementMethod()
-
-//        holder.itemView.setOnClickListener { v: View ->
-//
-//            Toast.makeText(v.context, "Clicked on the item", Toast.LENGTH_SHORT).show()
-//
-//        }
     }
 
 }
