@@ -1,32 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="#FDF9F3"
+    android:paddingTop="100dp"
+    android:padding="50dp">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:src="@drawable/gallery" />
+        android:padding="40dp"
+        android:background="@drawable/photoselect"
+        android:src="@drawable/newphoto" />
 
     <Button
+        android:elevation="50dp"
+        android:background="@drawable/photobutton"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:id="@+id/select_image_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="사진을 선택하세요" />
+        android:text="추억 고르기" />
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
+        android:padding="20dp"
+        android:background="@drawable/photoselect"
         android:hint="추억을 입력해주세요" />
 
     <Button
         android:id="@+id/add_card_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="추가" />
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/photobutton"
+        android:text="추억 작성하기" />
 
 </LinearLayout>

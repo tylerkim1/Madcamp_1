@@ -42,9 +42,6 @@
             android:name=".ContactRecyclerViewAdapter"
             android:exported="false" />
         <activity
-            android:name=".ContactDetailActivity"
-            android:exported="false" />
-        <activity
             android:name=".FourthFragment"
             android:exported="false" />
         <activity
