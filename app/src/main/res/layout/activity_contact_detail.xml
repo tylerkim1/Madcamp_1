@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:gravity="center"
         android:layout_margin="20dp"
-        android:padding="30dp"
+        android:padding="50dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,8 +27,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profileImageView"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:src="@drawable/beats"
                 android:scaleType="centerCrop"
                 android:padding="16dp" />
@@ -52,18 +52,37 @@
             android:textSize="16sp"
             android:text="010-0000-0000"
             android:padding="16dp" />
-        <Button
-            android:id="@+id/callButton"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="전화 걸기"
-            android:onClick="onCallButtonClick" />
-        <Button
-            android:id="@+id/sendMessageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="문자 보내기"
-            android:onClick="onSendMessageButtonClick" />
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="100dp"
+
+                >
+
+            <Button
+                android:id="@+id/callButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+
+                android:background="@drawable/phonebutton"
+                android:drawablePadding="50dp"
+                android:onClick="onCallButtonClick"></Button>
+            </LinearLayout>
+            <Button
+                android:id="@+id/sendMessageButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/messagebutton"
+                android:onClick="onSendMessageButtonClick" />
+
+        </LinearLayout>
+
 
         <!-- Other Detail Elements -->
         <!-- Add any other detail elements such as address, email, etc. -->

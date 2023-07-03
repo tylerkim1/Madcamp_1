@@ -55,7 +55,7 @@ class ContactDetailActivity : AppCompatActivity() {
     }
     fun onSendMessageButtonClick(view: View) {
         val phoneNumber = intent.getStringExtra("phoneNumber")
-        val defaultSmsMessage = "안녕하세요, 연락드렸습니다!" // 기본 메시지 내용
+        val defaultSmsMessage = "문득 사진을 보다가 생각나서 연락했어. 잘, 지내내?" // 기본 메시지 내용
 
         val sendIntent = Intent(Intent.ACTION_SENDTO)
         sendIntent.data = Uri.parse("smsto:$phoneNumber")
