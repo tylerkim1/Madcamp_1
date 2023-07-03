@@ -88,18 +88,6 @@ class RecyclerViewAdapter2(private val context: Context, private val dataSet: Ar
         return if (position == 0) TYPE_ADD_BUTTON else TYPE_CARD
     }
 
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-//        return if (viewType == TYPE_ADD_BUTTON) {
-//            val view = LayoutInflater.from(parent.context)
-//                .inflate(R.layout.tab3_newcard_model, parent, false)
-//            AddCardViewHolder(view)
-//        } else {
-//            val view = LayoutInflater.from(parent.context)
-//                .inflate(R.layout.tab3_card_model, parent, false)
-//            CardViewHolder(view)
-//        }
-//    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(context)
         return when (viewType) {
