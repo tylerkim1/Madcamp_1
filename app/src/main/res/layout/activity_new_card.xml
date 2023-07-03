@@ -9,24 +9,24 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:src="@drawable/ic_launcher_background" />
+        android:src="@drawable/gallery" />
 
     <Button
         android:id="@+id/select_image_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select Image" />
+        android:text="사진을 선택하세요" />
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter text" />
+        android:hint="추억을 입력해주세요" />
 
     <Button
         android:id="@+id/add_card_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Card" />
+        android:text="추가" />
 
 </LinearLayout>
