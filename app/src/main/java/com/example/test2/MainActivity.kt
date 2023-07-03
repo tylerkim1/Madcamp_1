@@ -1,10 +1,7 @@
 package com.example.test2
 
-import android.graphics.Color
+
 import android.os.Bundle
-import android.view.View
-import android.widget.TabHost
-import android.widget.TabHost.TabSpec
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
@@ -34,12 +31,12 @@ class MainActivity : AppCompatActivity() {
 
         viewPager2.adapter = adapter
 
-        val tabColors = arrayOf(R.color.one, R.color.two, R.color.three, R.color.three)
+        val tabColors = arrayOf(R.color.one, R.color.two, R.color.three, R.color.one)
         val tabIcons = arrayOf(
             R.drawable.phone,
             R.drawable.gallery,
             R.drawable.diary,
-            R.drawable.diary
+            R.drawable.phone
         )
         for (i in 0 until tabLayout.tabCount) {
             val tab = tabLayout.getTabAt(i)

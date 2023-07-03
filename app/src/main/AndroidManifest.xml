@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
@@ -19,6 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Test2"
         tools:targetApi="31">
+        <activity
+            android:name=".ContactRecyclerViewAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".FourthFragment"
+            android:exported="false" />
         <activity
             android:name=".UserActivity"
             android:exported="false" />
