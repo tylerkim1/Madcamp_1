@@ -62,8 +62,10 @@ class RecyclerViewAdapter2(private val context: Context, private val dataSet: Ar
                     val nameColumnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
                     val phoneNumberColumnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
 
-                    val name = cursor.getString(nameColumnIndex)
+                    var name = cursor.getString(nameColumnIndex)
                     val phoneNumber = cursor.getString(phoneNumberColumnIndex)
+
+                    name = name.replace(" ", "_") // replace spaces with _
 
                     val contact = Pair(name, phoneNumber)
                     contactsList.add(contact)
@@ -119,21 +121,24 @@ class RecyclerViewAdapter2(private val context: Context, private val dataSet: Ar
 
                 // Add the mentioned-name link feature
                 val inputText = card.text
-                val pattern = Pattern.compile("@([가-힣]+)")  // Handle Korean names
+                val pattern = Pattern.compile("@([\\w_]+)")  // Handle Korean names, English letters, spaces, parentheses, numbers and special characters
                 val matcher = pattern.matcher(inputText)
 
                 val spannableString = SpannableStringBuilder(inputText)
 
                 while (matcher.find()) {
                     val mentionName = matcher.group(1)
-                    if (names.contains(mentionName)) {
+                    val lastSpaceIndex = mentionName.lastIndexOf(' ')
+                    val validName = if (lastSpaceIndex != -1) mentionName.substring(0, lastSpaceIndex) else mentionName
+
+                    if (names.contains(validName)) {
                         val clickableSpan = object : ClickableSpan() {
                             override fun onClick(widget: View) {
                                 val context = widget.context
-                                val phoneNumber = getContacts().firstOrNull { it.first == mentionName }?.second
+                                val phoneNumber = getContacts().firstOrNull { it.first == validName }?.second
 
                                 val intent = Intent(context, UserActivity::class.java).apply {
-                                    putExtra("name", mentionName)
+                                    putExtra("name", validName)
                                     putExtra("phone", phoneNumber)
                                 }
                                 context.startActivity(intent)
