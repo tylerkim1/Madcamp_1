@@ -31,7 +31,7 @@ class ThirdFragment : Fragment() {
         layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
 
-        adapter = RecyclerViewAdapter2()
+        adapter = RecyclerViewAdapter2(requireContext())
         recyclerView.adapter = adapter
     }
 
