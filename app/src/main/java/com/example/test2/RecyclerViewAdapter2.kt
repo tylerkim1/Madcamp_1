@@ -1,6 +1,7 @@
 package com.example.test2
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,32 +11,29 @@ import android.provider.ContactsContract
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
-import android.text.method.ScrollingMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import java.util.regex.Pattern
 
-class RecyclerViewAdapter2(private val context: Context) : RecyclerView.Adapter<RecyclerViewAdapter2.ViewHolder>() {
+class RecyclerViewAdapter2(private val context: Context, private val dataSet: ArrayList<Card>,
+                           private val newCardResultLauncher: ActivityResultLauncher<Intent>
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val itemDetails = arrayOf(
-        "@경효 과 함께 방문한 관광명소. 함께라서 더 즐거운 시간이었다. 언젠가 다시 가게 된다면 바닷가를 조금 더 봐야겠다. 정말 아름다운 풍경이었다. @최은서 와 함께해서 더 재밌었다. 부산의 앞바다에서 풍겨오는 바다내음은 어딘가 모를 그리움을 불러 일으키고 있었습니다. @노가은 과 함께 방문한 관광명소. 함께라서 더 즐거운 시간이었다. 언젠가 다시 가게 된다면 바닷가를 조금 더 봐야겠다. 정말 아름다운 풍경이었다. @최은서 와 함께해서 더 재밌었다. 부산의 앞바다에서 풍겨오는 바다내음은 어딘가 모를 그리움을 불러 일으키고 있었습니다.",
-        "@이상현 와 함께 방문한 관광명소. 함께라서 더 즐거운 시간이었다. 언젠가 다시 가게 된다면 바닷가를 조금 더 봐야겠다. 정말 아름다운 풍경이었다. 재밌었다. 부산의 앞바다에서 풍겨오는 바다내음은 어딘가 모를 그리움을 불러 일으키고 있었습니다.",
-        "추억을 입력하세요"
-    )
-
-    private val itemImages = intArrayOf(
-        R.drawable.profile1,
-        R.drawable.profile2,
-        R.drawable.person
-    )
+    companion object {
+        private const val TYPE_ADD_BUTTON = 0
+        private const val TYPE_CARD = 1
+        const val REQUEST_NEW_CARD = 2
+    }
 
     private val names = getContacts().map { it.first }.toTypedArray()
 
@@ -77,71 +75,110 @@ class RecyclerViewAdapter2(private val context: Context) : RecyclerView.Adapter<
         return contactsList
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        var image: ImageView = itemView.findViewById(R.id.item_image)
-        var textDes: TextView = itemView.findViewById(R.id.item_details)
-    }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recyclerview_model, parent, false)
-        return ViewHolder(v)
+    class AddCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val addCardButton: Button = view.findViewById(R.id.add_card_button)
     }
 
-    override fun getItemCount(): Int {
-        return itemDetails.size
+    class CardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val textView: TextView = view.findViewById(R.id.item_details)
+        val imageView: ImageView = view.findViewById(R.id.item_image)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.image.setImageResource(itemImages[position])
+    override fun getItemViewType(position: Int): Int {
+        return if (position == 0) TYPE_ADD_BUTTON else TYPE_CARD
+    }
 
-        val inputText = itemDetails[position]
-        val pattern = Pattern.compile("@([가-힣]+)")  // 한글 이름을 처리하도록 정규표현식 변경
-        val matcher = pattern.matcher(inputText)
+//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+//        return if (viewType == TYPE_ADD_BUTTON) {
+//            val view = LayoutInflater.from(parent.context)
+//                .inflate(R.layout.tab3_newcard_model, parent, false)
+//            AddCardViewHolder(view)
+//        } else {
+//            val view = LayoutInflater.from(parent.context)
+//                .inflate(R.layout.tab3_card_model, parent, false)
+//            CardViewHolder(view)
+//        }
+//    }
 
-        val spannableString = SpannableStringBuilder(inputText)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = LayoutInflater.from(context)
+        return when (viewType) {
+            TYPE_ADD_BUTTON -> AddCardViewHolder(inflater.inflate(R.layout.tab3_newcard_model, parent, false))
+            TYPE_CARD -> CardViewHolder(inflater.inflate(R.layout.tab3_card_model, parent, false))
+            else -> throw IllegalArgumentException("Invalid view type")
+        }
+    }
 
-        while (matcher.find()) {
-            val mentionName = matcher.group(1)
-            if (names.contains(mentionName)) {  // names 배열을 사용하여 이름이 존재하는지 확인
-                val clickableSpan = object : ClickableSpan() {
-                    override fun onClick(widget: View) {
-                        val context = widget.context
-                        val phoneNumber = getContacts().firstOrNull { it.first == mentionName }?.second
+    override fun getItemCount() = dataSet.size + 1 // Plus 1 for the add button
 
-                        val intent = Intent(context, UserActivity::class.java).apply {
-                            putExtra("name", mentionName)
-                            putExtra("phone", phoneNumber)  // phoneNumber 추가
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (getItemViewType(position) == TYPE_ADD_BUTTON) {
+            (holder as AddCardViewHolder).addCardButton.setOnClickListener {
+                val intent = Intent(context, NewCardActivity::class.java)
+                newCardResultLauncher.launch(intent)
+            }
+        } else {
+            val cardPosition = position - 1 // Subtract 1 because of the add button at position 0
+            val card = dataSet[cardPosition]
+
+            with(holder as CardViewHolder) {
+                // Add image resource setting
+                if (card.imageUri != null) {
+                    imageView.setImageURI(card.imageUri)
+                } else {
+                    imageView.setImageResource(R.drawable.profile1) // 기본 템플릿 카드에 대한 기본 이미지 리소스 설정
+                }
+
+                // Add the mentioned-name link feature
+                val inputText = card.text
+                val pattern = Pattern.compile("@([가-힣]+)")  // Handle Korean names
+                val matcher = pattern.matcher(inputText)
+
+                val spannableString = SpannableStringBuilder(inputText)
+
+                while (matcher.find()) {
+                    val mentionName = matcher.group(1)
+                    if (names.contains(mentionName)) {
+                        val clickableSpan = object : ClickableSpan() {
+                            override fun onClick(widget: View) {
+                                val context = widget.context
+                                val phoneNumber = getContacts().firstOrNull { it.first == mentionName }?.second
+
+                                val intent = Intent(context, UserActivity::class.java).apply {
+                                    putExtra("name", mentionName)
+                                    putExtra("phone", phoneNumber)
+                                }
+                                context.startActivity(intent)
+                            }
                         }
-                        context.startActivity(intent)
+
+                        spannableString.setSpan(
+                            clickableSpan,
+                            matcher.start(),
+                            matcher.end(),
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        spannableString.setSpan(
+                            ForegroundColorSpan(Color.BLUE),
+                            matcher.start(),
+                            matcher.end(),
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        spannableString.setSpan(
+                            UnderlineSpan(),
+                            matcher.start(),
+                            matcher.end(),
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
                     }
                 }
 
-                spannableString.setSpan(
-                    clickableSpan,
-                    matcher.start(),
-                    matcher.end(),
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-                spannableString.setSpan(
-                    ForegroundColorSpan(Color.BLUE),  // 글씨 색상을 파란색으로 설정합니다.
-                    matcher.start(),
-                    matcher.end(),
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-                spannableString.setSpan(
-                    UnderlineSpan(),  // 밑줄을 추가합니다.
-                    matcher.start(),
-                    matcher.end(),
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
+                textView.apply {
+                    text = spannableString
+                    movementMethod = LinkMovementMethod.getInstance()
+                }
             }
-        }
 
-        holder.textDes.apply {
-            text = spannableString
-            movementMethod = LinkMovementMethod.getInstance()  // 클릭 가능한 링크를 활성화합니다.
         }
     }
-
 }

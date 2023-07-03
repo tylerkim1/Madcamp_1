@@ -12,7 +12,7 @@
         android:src="@drawable/ic_launcher_background" />
 
     <Button
-        android:id="@+id/button_select_image"
+        android:id="@+id/select_image_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Select Image" />
@@ -24,7 +24,7 @@
         android:hint="Enter text" />
 
     <Button
-        android:id="@+id/button_add_card"
+        android:id="@+id/add_card_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add Card" />
