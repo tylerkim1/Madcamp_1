@@ -12,11 +12,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
 import android.Manifest
+import android.content.Intent
 import android.database.Cursor
-import android.os.Environment
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.provider.ContactsContract
-import android.provider.MediaStore
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.test2.databinding.FragmentFourthBinding
 import androidx.recyclerview.widget.RecyclerView
@@ -59,8 +60,8 @@ class FourthFragment : Fragment() {
         )
     }
 
-    private fun getContacts(): ArrayList<Pair<String, String>> {
-        val contactsList = ArrayList<Pair<String, String>>()
+    private fun getContacts(): ArrayList<Triple<String, String, Bitmap?>> {
+        val contactsList = ArrayList<Triple<String, String, Bitmap?>>()
 
         val cursor: Cursor? = requireActivity().contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -74,11 +75,23 @@ class FourthFragment : Fragment() {
             while (cursor.moveToNext()) {
                 val nameColumnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
                 val phoneNumberColumnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+                val contactIdColumnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)
 
                 val name = cursor.getString(nameColumnIndex)
                 val phoneNumber = cursor.getString(phoneNumberColumnIndex)
+                val contactId = cursor.getLong(contactIdColumnIndex)
+                val photoUri = getPhotoUri(contactId)
 
-                val contact = Pair(name, phoneNumber)
+                val photoBitmap: Bitmap? = if (photoUri != null) {
+                    val inputStream = requireActivity().contentResolver.openInputStream(photoUri)
+                    BitmapFactory.decodeStream(inputStream)
+                } else {
+                    null
+                }
+
+
+                val contact = Triple(name, phoneNumber, if (photoBitmap != null) Bitmap.createBitmap(photoBitmap) else null)
+
                 contactsList.add(contact)
             }
             cursor.close()
@@ -86,14 +99,41 @@ class FourthFragment : Fragment() {
 
         return contactsList
     }
+    private fun getPhotoUri(contactId: Long): Uri? {
+        val contentResolver = requireActivity().contentResolver
+        val cursor: Cursor? = contentResolver.query(
+            ContactsContract.Data.CONTENT_URI,
+            arrayOf(ContactsContract.CommonDataKinds.Photo.PHOTO_URI),
+            "${ContactsContract.Data.CONTACT_ID} = ? AND ${ContactsContract.Data.MIMETYPE} = ?",
+            arrayOf(contactId.toString(), ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE),
+            null
+        )
 
+        var photoUri: Uri? = null
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val columnIndex = it.getColumnIndex(ContactsContract.CommonDataKinds.Photo.PHOTO_URI)
+                photoUri = Uri.parse(it.getString(columnIndex))
+            }
+        }
+
+        cursor?.close()
+        return photoUri
+    }
     private fun prepareRecyclerView() {
         // Prepare the RecyclerView.
         contactRVAdapter = ContactRecyclerViewAdapter(requireContext(), getContacts())
+        contactRVAdapter?.setOnItemClickListener(object : ContactRecyclerViewAdapter.OnItemClickListener {
+            override fun onItemClick(contact: Triple<String, String, Bitmap?>) {
+                navigateToContactDetail(contact)
+            }
+        })
         val manager = LinearLayoutManager(requireContext())
         contactsRV?.layoutManager = manager
         contactsRV?.adapter = contactRVAdapter
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -101,10 +141,28 @@ class FourthFragment : Fragment() {
         // Initialize RecyclerView
         contactsRV = binding.contactsRecyclerView
 
+        // Set item click listener for RecyclerView
+        contactRVAdapter?.setOnItemClickListener(object : ContactRecyclerViewAdapter.OnItemClickListener {
+            override fun onItemClick(contact: Triple<String, String, Bitmap?>) {
+                navigateToContactDetail(contact)
+            }
+        })
+
         // Request permissions and prepare RecyclerView
         requestPermissions2()
         prepareRecyclerView()
     }
+
+
+    private fun navigateToContactDetail(contact: Triple<String, String, Bitmap?>) {
+        val intent = Intent(requireContext(), ContactDetailActivity::class.java)
+        // Pass the contact information to the ContactDetailActivity using extras
+        intent.putExtra("name", contact.first)
+        intent.putExtra("phoneNumber", contact.second)
+        // Add more extras as needed for additional information
+        startActivity(intent)
+    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
