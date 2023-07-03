@@ -10,15 +10,14 @@ class FragmentPageAdapter (
     lifecycle: Lifecycle
 ) : FragmentStateAdapter(fragmentManager, lifecycle){
     override fun getItemCount(): Int {
-        return 4
+        return 3
     }
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> FirstFragment()
+            0 -> FourthFragment()
             1 -> SecondFragment()
-            2 -> ThirdFragment()
-            else -> FourthFragment()
+            else -> ThirdFragment()
         }
     }
 }
