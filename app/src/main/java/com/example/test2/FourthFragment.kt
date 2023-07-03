@@ -89,16 +89,14 @@ class FourthFragment : Fragment() {
                     null
                 }
 
-
-                val contact = Triple(name, phoneNumber, if (photoBitmap != null) Bitmap.createBitmap(photoBitmap) else null)
-
-                contactsList.add(contact)
+                contactsList.add(Triple(name, phoneNumber, photoBitmap))
             }
             cursor.close()
         }
 
         return contactsList
     }
+
     private fun getPhotoUri(contactId: Long): Uri? {
         val contentResolver = requireActivity().contentResolver
         val cursor: Cursor? = contentResolver.query(
@@ -156,12 +154,17 @@ class FourthFragment : Fragment() {
 
     private fun navigateToContactDetail(contact: Triple<String, String, Bitmap?>) {
         val intent = Intent(requireContext(), ContactDetailActivity::class.java)
-        // Pass the contact information to the ContactDetailActivity using extras
         intent.putExtra("name", contact.first)
         intent.putExtra("phoneNumber", contact.second)
-        // Add more extras as needed for additional information
+        contact.third?.let { bitmap ->
+            val photoUri = getPhotoUri(contact.first.toLong()) // Pass the name to get the photo URI
+            intent.putExtra("photoUri", photoUri)
+        }
         startActivity(intent)
     }
+
+
+
 
 
     override fun onRequestPermissionsResult(

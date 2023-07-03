@@ -1,4 +1,7 @@
+package com.example.test2
 import android.graphics.Bitmap
+
+
 import android.graphics.BitmapShader
 import android.graphics.Canvas
 import android.graphics.Paint
