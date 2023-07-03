@@ -50,12 +50,12 @@ class ThirdFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
 
         cards.apply {
-            add(Card( Uri.parse(""),
+            add(Card( null,
                 "@경효 과 함께 방문한 관광명소. 함께라서 더 즐거운 시간이었다. 언젠가 다시 가게 된다면 바닷가를 조금 더 봐야겠다. 정말 아름다운 풍경이었다. @최은서 와 함께해서 더 재밌었다. 부산의 앞바다에서 풍겨오는 바다내음은 어딘가 모를 그리움을 불러 일으키고 있었습니다. @노가은 과 함께 방문한 관광명소. 함께라서 더 즐거운 시간이었다. 언젠가 다시 가게 된다면 바닷가를 조금 더 봐야겠다. 정말 아름다운 풍경이었다. @최은서 와 함께해서 더 재밌었다. 부산의 앞바다에서 풍겨오는 바다내음은 어딘가 모를 그리움을 불러 일으키고 있었습니다."))
-            add(Card( Uri.parse(""),
+            add(Card( null,
                 "@이상현 와 함께 방문한 관광명소. 함께라서 더 즐거운 시간이었다. 언젠가 다시 가게 된다면 바닷가를 조금 더 봐야겠다. 정말 아름다운 풍경이었다. 재밌었다. 부산의 앞바다에서 풍겨오는 바다내음은 어딘가 모를 그리움을 불러 일으키고 있었습니다."))
             // add more cards if needed
-            add(Card( Uri.parse(""),
+            add(Card( null,
                 "@이상현 안녕하세요"))
             // add more cards if needed
         }

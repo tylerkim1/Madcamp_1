@@ -126,7 +126,7 @@ class RecyclerViewAdapter2(private val context: Context, private val dataSet: Ar
                 if (card.imageUri != null) {
                     imageView.setImageURI(card.imageUri)
                 } else {
-                    imageView.setImageResource(R.drawable.profile1) // 기본 템플릿 카드에 대한 기본 이미지 리소스 설정
+                    imageView.setImageResource(R.drawable.profile3) // 기본 템플릿 카드에 대한 기본 이미지 리소스 설정
                 }
 
                 // Add the mentioned-name link feature
