@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:text="추억 고르기" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="200dp"

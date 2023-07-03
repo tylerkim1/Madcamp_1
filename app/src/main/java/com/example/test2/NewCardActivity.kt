@@ -3,6 +3,7 @@ package com.example.test2
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.Manifest
+import android.R
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -12,8 +13,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.MediaStore
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -23,20 +27,42 @@ import com.example.test2.databinding.ActivityNewCardBinding
 class NewCardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewCardBinding
     private var selectedImageUri: Uri? = null
-//    private val PERMISSIONS_REQUEST_READ_CONTACTS = 100
+    private val PERMISSIONS_REQUEST_READ_CONTACTS = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewCardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-//            requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), PERMISSIONS_REQUEST_READ_CONTACTS)
-//            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
-//        } else {
-//            val contacts = getContacts()
-//            Log.d("NewCardActivity", "Contacts: $contacts")
-//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), PERMISSIONS_REQUEST_READ_CONTACTS)
+        } else {
+            val contacts = getContacts()
+            val adapter = CustomArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, contacts)
+            binding.editText.setAdapter(adapter)
+
+            binding.editText.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable) {
+                    if (s.isNotEmpty() && s[s.length - 1] == '@') {
+                        binding.editText.showDropDown()
+                    } else if (s.contains("@")) {
+                        adapter.filter.filter(s)
+                    }
+                }
+
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            })
+
+            // 선택된 연락처를 '@' 뒤에 추가합니다.
+            binding.editText.setOnItemClickListener { _, _, position, _ ->
+                val selectedContact = adapter.getItem(position)
+                val currentText = binding.editText.text.toString()
+                val newText = "@" + currentText.substring(0, currentText.indexOf("@") + 1) + selectedContact + " "
+                binding.editText.setText(newText)
+                binding.editText.setSelection(newText.length)  // 커서를 텍스트 끝으로 이동
+            }
+        }
 
         // 이미지 선택 버튼 클릭 시 갤러리 열기
         binding.selectImageButton.setOnClickListener {
@@ -77,20 +103,24 @@ class NewCardActivity : AppCompatActivity() {
         }
     }
 
-//    @SuppressLint("Range")
-//    private fun getContacts(): ArrayList<String> {
-//        val cursor = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null)
-//        val contacts = ArrayList<String>()
-//
-//        cursor?.let {
-//            while (it.moveToNext()) {
-//                contacts.add(it.getString(it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)))
-//            }
-//            it.close()
-//        }
-//
-//        return contacts
-//    }
+    @SuppressLint("Range")
+    private fun getContacts(): ArrayList<String> {
+        val cursor = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null)
+        val contacts = ArrayList<String>()
+
+        cursor?.let {
+            while (cursor.moveToNext()) {
+                val nameColumnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
+                var name = cursor.getString(nameColumnIndex)
+
+                name = name.replace(" ", "_") // replace spaces with _
+                contacts.add(name)
+            }
+            cursor.close()
+        }
+
+        return contacts
+    }
 
     companion object {
         private const val REQUEST_SELECT_IMAGE = 1
