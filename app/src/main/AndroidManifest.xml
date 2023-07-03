@@ -36,7 +36,13 @@
             android:name=".ImageUtils"
             android:exported="false" />
         <activity
+            android:name=".NewCardActivity"
+            android:exported="false" />
+        <activity
             android:name=".ContactRecyclerViewAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".ContactDetailActivity"
             android:exported="false" />
         <activity
             android:name=".FourthFragment"

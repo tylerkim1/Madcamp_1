@@ -9,8 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.net.Uri
 import android.view.View
-//import com.example.test2.databinding.ActivityUserBinding
-
 
 class ContactDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
