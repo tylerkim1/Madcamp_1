@@ -111,6 +111,13 @@ class RecyclerViewAdapter2(private val context: Context, private val dataSet: Ar
             val cardPosition = dataSet.size - position
             val card = dataSet[cardPosition]
 
+            holder.itemView.setOnClickListener {
+                val intent = Intent(context, CardDetailActivity::class.java)
+                intent.putExtra("imageUri", card.imageUri.toString()) // Uri를 String으로 변환하여 저장
+                intent.putExtra("text", card.text)
+                context.startActivity(intent)
+            }
+
             with(holder as CardViewHolder) {
                 // Add image resource setting
                 if (card.imageUri != null) {
