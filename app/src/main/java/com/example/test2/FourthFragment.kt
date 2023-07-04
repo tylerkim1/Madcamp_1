@@ -41,6 +41,7 @@ class FourthFragment : Fragment() {
         return result2 == PackageManager.PERMISSION_GRANTED
     }
 
+
     private fun requestPermissions2() {
         if (checkPermission2()) {
             // 연락처 권한이 승인되어 있는 경우 연락처 관련 작업 수행
