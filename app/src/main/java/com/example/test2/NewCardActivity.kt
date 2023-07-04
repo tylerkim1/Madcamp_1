@@ -75,7 +75,6 @@ class NewCardActivity : AppCompatActivity() {
                     binding.editText.setSelection(newText.length) // Move cursor to the end of the text
                 }
             }
-
         }
 
         // 이미지 선택 버튼 클릭 시 갤러리 열기

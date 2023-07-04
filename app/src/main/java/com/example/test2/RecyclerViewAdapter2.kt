@@ -108,7 +108,7 @@ class RecyclerViewAdapter2(private val context: Context, private val dataSet: Ar
                 newCardResultLauncher.launch(intent)
             }
         } else {
-            val cardPosition = position - 1 // Subtract 1 because of the add button at position 0
+            val cardPosition = dataSet.size - position
             val card = dataSet[cardPosition]
 
             with(holder as CardViewHolder) {

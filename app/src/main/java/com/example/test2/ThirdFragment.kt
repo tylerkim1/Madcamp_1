@@ -28,6 +28,7 @@ class ThirdFragment : Fragment() {
             if (text != null) {
                 val newCard = Card(imageUri, text)
                 cards.add(newCard)
+//                adapter?.notifyItemInserted(0)
                 adapter?.notifyDataSetChanged()
             }
         }
