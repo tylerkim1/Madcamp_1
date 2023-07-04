@@ -38,7 +38,7 @@ class NewCardActivity : AppCompatActivity() {
             requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), PERMISSIONS_REQUEST_READ_CONTACTS)
         } else {
             val contacts = getContacts()
-            val adapter = CustomArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, contacts)
+            val adapter = CustomArrayAdapter(this, contacts)
             binding.editText.setAdapter(adapter)
 
             binding.editText.addTextChangedListener(object : TextWatcher {
@@ -46,12 +46,17 @@ class NewCardActivity : AppCompatActivity() {
                     if (s.isNotEmpty() && s[s.length - 1] == '@') {
                         binding.editText.showDropDown()
                     } else if (s.contains("@")) {
-                        adapter.filter.filter(s)
+                        val mentionText = s.substring(s.lastIndexOf('@') + 1)  // Extract text after @
+                        adapter.filter.filter(mentionText)  // Filter based on the mention text
                     }
                 }
 
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    if (s.isNotEmpty() && s[s.length - 1] == '@') {
+                        adapter.getFilter().filter(null)
+                    }
+                }
             })
 
             // 선택된 연락처를 '@' 뒤에 추가합니다.
