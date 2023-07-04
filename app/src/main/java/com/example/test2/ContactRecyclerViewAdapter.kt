@@ -10,6 +10,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 class ContactRecyclerViewAdapter(
     private val context: Context,
@@ -41,15 +44,35 @@ class ContactRecyclerViewAdapter(
                 putExtra("phoneNumber", contact.second)
                 val bitmap = contact.third
                 if (bitmap != null) {
-                    val stream = ByteArrayOutputStream()
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                    val byteArray = stream.toByteArray()
-                    putExtra("image", byteArray)
+                    val file = saveBitmapToFile(bitmap)
+                    putExtra("imagePath", file?.absolutePath)
                 }
             }
             context.startActivity(intent)
+
+            // Set the data in ContactDataHolder
+            ContactDataHolder.name = contact.first
+            ContactDataHolder.phoneNumber = contact.second
+            ContactDataHolder.profileImagePath = intent.getStringExtra("imagePath")
         }
     }
+
+    private fun saveBitmapToFile(bitmap: Bitmap): File? {
+        val file = File(context.cacheDir, "profile_image.jpg")
+        try {
+            val stream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            stream.flush()
+            stream.close()
+            return file
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+
+
 
     override fun getItemCount(): Int {
         return contactList.size

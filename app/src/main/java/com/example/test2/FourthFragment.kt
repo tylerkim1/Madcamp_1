@@ -17,10 +17,12 @@ import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.provider.ContactsContract
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.test2.databinding.FragmentFourthBinding
 import androidx.recyclerview.widget.RecyclerView
+import java.io.ByteArrayOutputStream
 
 class FourthFragment : Fragment() {
     private val PERMISSION_REQUEST_CODE = 300
@@ -90,6 +92,7 @@ class FourthFragment : Fragment() {
                 }
 
                 contactsList.add(Triple(name, phoneNumber, photoBitmap))
+
             }
             cursor.close()
         }
@@ -157,8 +160,10 @@ class FourthFragment : Fragment() {
         intent.putExtra("name", contact.first)
         intent.putExtra("phoneNumber", contact.second)
         contact.third?.let { bitmap ->
-            val photoUri = getPhotoUri(contact.first.toLong()) // Pass the name to get the photo URI
-            intent.putExtra("photoUri", photoUri)
+            val stream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            val byteArray = stream.toByteArray()
+            intent.putExtra("image", byteArray)
         }
         startActivity(intent)
     }
