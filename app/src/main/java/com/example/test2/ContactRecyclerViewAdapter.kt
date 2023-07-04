@@ -112,8 +112,13 @@ class ContactRecyclerViewAdapter(
     }
 
     fun setContacts(contacts: ArrayList<Triple<String, String, Bitmap?>>) {
+        val uniqueContacts = contacts.groupBy { Pair(it.first, it.second) }
+            .map { it.value.first() }
         contactList.clear()
-        contactList.addAll(contacts.sortedBy { it.first })
+        contactList.addAll(uniqueContacts.sortedBy { it.first })
         notifyDataSetChanged()
     }
+
+
+
 }
