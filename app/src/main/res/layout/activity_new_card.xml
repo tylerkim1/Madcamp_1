@@ -17,6 +17,7 @@
         android:src="@drawable/newphoto" />
 
     <Button
+        android:fontFamily="@font/nanum"
         android:elevation="50dp"
         android:background="@drawable/photobutton"
         android:layout_marginTop="20dp"
@@ -27,6 +28,7 @@
         android:text="추억 고르기" />
 
     <AutoCompleteTextView
+        android:fontFamily="@font/nanum"
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -36,6 +38,7 @@
         android:textColor="@color/black"/>
 
     <Button
+        android:fontFamily="@font/nanum"
         android:id="@+id/add_card_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
