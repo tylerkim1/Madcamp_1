@@ -127,9 +127,8 @@ class RecyclerViewAdapter2(private val context: Context, private val dataSet: Ar
                     imageView.setImageResource(R.drawable.profile3) // 기본 템플릿 카드에 대한 기본 이미지 리소스 설정
                 }
 
-                // Add the mentioned-name link feature
                 val inputText = card.text
-                val pattern = Pattern.compile("@([\\w_]+)")  // Handle Korean names, English letters, spaces, parentheses, numbers and special characters
+                val pattern = Pattern.compile("@([\\w_]+)")
                 val matcher = pattern.matcher(inputText)
 
                 val spannableString = SpannableStringBuilder(inputText)
@@ -144,7 +143,6 @@ class RecyclerViewAdapter2(private val context: Context, private val dataSet: Ar
                             override fun onClick(widget: View) {
                                 val context = widget.context
                                 val phoneNumber = getContacts().firstOrNull { it.first == validName }?.second
-                                //val profileImagePath = getContacts().fir
 
                                 val intent = Intent(context, ContactDetailActivity::class.java).apply {
                                     ContactDataHolder.name = validName
