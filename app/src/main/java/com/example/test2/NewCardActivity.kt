@@ -28,6 +28,7 @@ class NewCardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewCardBinding
     private var selectedImageUri: Uri? = null
     private val PERMISSIONS_REQUEST_READ_CONTACTS = 100
+    private var fullText: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +39,7 @@ class NewCardActivity : AppCompatActivity() {
             requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), PERMISSIONS_REQUEST_READ_CONTACTS)
         } else {
             val contacts = getContacts()
-            val adapter = CustomArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, contacts)
+            val adapter = CustomArrayAdapter(this, contacts)
             binding.editText.setAdapter(adapter)
 
             binding.editText.addTextChangedListener(object : TextWatcher {
@@ -46,21 +47,33 @@ class NewCardActivity : AppCompatActivity() {
                     if (s.isNotEmpty() && s[s.length - 1] == '@') {
                         binding.editText.showDropDown()
                     } else if (s.contains("@")) {
-                        adapter.filter.filter(s)
+                        val mentionText = s.substring(s.lastIndexOf('@') + 1)  // Extract text after @
+                        adapter.filter.filter(mentionText)  // Filter based on the mention text
                     }
                 }
 
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                    fullText = s.toString()  // 텍스트가 변경되기 전에 전체 텍스트를 백업합니다.
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    if (s.isNotEmpty() && s[s.length - 1] == '@') {
+                        adapter.getFilter().filter(null)
+                    }
+                }
             })
 
-            // 선택된 연락처를 '@' 뒤에 추가합니다.
             binding.editText.setOnItemClickListener { _, _, position, _ ->
-                val selectedContact = adapter.getItem(position)
-                val currentText = binding.editText.text.toString()
-                val newText = "@" + currentText.substring(0, currentText.indexOf("@") + 1) + selectedContact + " "
-                binding.editText.setText(newText)
-                binding.editText.setSelection(newText.length)  // 커서를 텍스트 끝으로 이동
+                val selectedContact = adapter.getItem(position).toString()
+                val atIndex = fullText.lastIndexOf("@")
+                if (atIndex != -1) {
+                    val startText = fullText.substring(0, atIndex) // this is the text before last '@'
+                    val spaceIndex = fullText.indexOf(' ', atIndex)
+                    val remainingText = if (spaceIndex != -1) fullText.substring(spaceIndex) else "" // this is the text after the space following '@' if exists
+                    val newText = "$startText@$selectedContact $remainingText" // combine all
+                    binding.editText.setText(newText)
+                    binding.editText.setSelection(newText.length) // Move cursor to the end of the text
+                }
             }
         }
 
