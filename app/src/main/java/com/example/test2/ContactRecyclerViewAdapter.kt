@@ -32,7 +32,8 @@ class ContactRecyclerViewAdapter(
         return ContactViewHolder(itemView, itemClickListener)
     }
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
-        val contact = contactList[position]
+        val sortedContactList = contactList.sortedBy { it.first } // 이름으로 정렬
+        val contact = sortedContactList[position]
 
         // Bind the contact data to the view holder
         holder.bind(contact)
@@ -56,6 +57,7 @@ class ContactRecyclerViewAdapter(
             ContactDataHolder.profileImagePath = intent.getStringExtra("imagePath")
         }
     }
+
 
     private fun saveBitmapToFile(bitmap: Bitmap): File? {
         val file = File(context.cacheDir, "profile_image.jpg")
@@ -111,7 +113,7 @@ class ContactRecyclerViewAdapter(
 
     fun setContacts(contacts: ArrayList<Triple<String, String, Bitmap?>>) {
         contactList.clear()
-        contactList.addAll(contacts)
+        contactList.addAll(contacts.sortedBy { it.first })
         notifyDataSetChanged()
     }
 }
