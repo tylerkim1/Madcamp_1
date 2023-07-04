@@ -13,7 +13,6 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:padding="40dp"
         android:background="@drawable/photoselect"
         android:src="@drawable/newphoto" />
 
@@ -33,7 +32,8 @@
         android:layout_height="200dp"
         android:padding="20dp"
         android:background="@drawable/photoselect"
-        android:hint="추억을 입력해주세요" />
+        android:hint="추억을 입력해주세요"
+        android:textColor="@color/black"/>
 
     <Button
         android:id="@+id/add_card_button"
