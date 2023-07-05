@@ -163,7 +163,7 @@ class RecyclerViewAdapter2(private val context: Context, private val dataSet: Ar
                             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
                         spannableString.setSpan(
-                            ForegroundColorSpan(Color.rgb(64,46,0)),
+                            ForegroundColorSpan(Color.BLUE),
                             matcher.start(),
                             matcher.end(),
                             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
