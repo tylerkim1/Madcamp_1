@@ -1,9 +1,8 @@
-# Madcamp_1
-1st week project ( 6 / 29 ~ 7 / 5 )
 
 ## 잘, 지내니? - Made by. 심수연, 김태형
 ![썸네일](https://github.com/tylerkim1/Madcamp_1/assets/84979352/5e4eab02-0f45-40e8-a444-d29e10dbdd15)
-
+###### Madcamp_1
+1st week project ( 6 / 29 ~ 7 / 5 )
 ### 1. 프로젝트 개요
 - 현대사회는 sns같이 단편적이고 자극적인 연락 매체에 쉽게 노출되어 있습니다.
   - 이름, 얼굴을 몰라도 아무에게나 연락을 던질 수 있는 SNS DM 등
