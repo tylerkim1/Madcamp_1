@@ -15,12 +15,14 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import android.Manifest
 import android.os.Environment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
 /**
  * A simple [Fragment] subclass.

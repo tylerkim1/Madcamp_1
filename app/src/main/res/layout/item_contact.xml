@@ -6,12 +6,22 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_margin="15dp"
-    android:background="@drawable/profile_shadow"
+
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/profile_shadow"
+        >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="3dp"
+        android:layout_marginBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
         android:background="@drawable/background_rectangle"
         android:orientation="horizontal">
 
@@ -19,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+
             android:background="@drawable/backgruond_circle">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -26,6 +37,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
+                android:padding="0dp"
                 android:src="@drawable/beats" />
         </LinearLayout>
 
@@ -42,6 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="심심수"
+                android:paddingBottom="10dp"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -58,5 +71,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
+    </LinearLayout>
 </LinearLayout>

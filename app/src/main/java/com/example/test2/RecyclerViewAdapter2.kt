@@ -167,25 +167,26 @@ class RecyclerViewAdapter2(private val context: Context, private val dataSet: Ar
                                 }
                             }
 
-                            spannableString.setSpan(
-                                clickableSpan,
-                                matcher.start(),
-                                matcher.end(),
-                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                            )
-                            spannableString.setSpan(
-                                ForegroundColorSpan(Color.BLUE),
-                                matcher.start(),
-                                matcher.end(),
-                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                            )
-                            spannableString.setSpan(
-                                UnderlineSpan(),
-                                matcher.start(),
-                                matcher.end(),
-                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                            )
-                        }
+
+                        spannableString.setSpan(
+                            clickableSpan,
+                            matcher.start(),
+                            matcher.end(),
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        spannableString.setSpan(
+                            ForegroundColorSpan(Color.BLUE),
+                            matcher.start(),
+                            matcher.end(),
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        spannableString.setSpan(
+                            UnderlineSpan(),
+                            matcher.start(),
+                            matcher.end(),
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+
                     }
 
                     textView.apply {

@@ -4,9 +4,10 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    app:cardCornerRadius="5dp"
+    app:cardCornerRadius="30dp"
     app:cardElevation="6dp"
     android:layout_margin="15dp"
+    app:cardBackgroundColor="@color/three"
     android:foreground="?selectableItemBackground"
     android:clickable="true" >
 
@@ -20,14 +21,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="3dp"
             android:background="@drawable/background_rectangle"
             android:orientation="horizontal" >
 
             <Button
                 android:id="@+id/add_card_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:drawable/ic_input_add"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/plusbutton"
                 android:padding="16dp" />
 
         </LinearLayout>
