@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    app:cardCornerRadius="30dp"
-    app:cardElevation="6dp"
+    android:layout_height="250dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="3dp"
     android:layout_margin="15dp"
-    app:cardBackgroundColor="@color/three"
     android:foreground="?selectableItemBackground"
-    android:clickable="true" >
+    android:background="@color/three"
+    android:clickable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,18 +20,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_marginRight="3dp"
-            android:layout_marginBottom="3dp"
-            android:background="@drawable/background_rectangle"
-            android:orientation="horizontal" >
+            android:background="@drawable/background_rectangle_dash"
+            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/add_card_button"
+            <TextView
+                android:id="@+id/item_details"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/plusbutton"
-                android:padding="16dp" />
+                android:gravity="center"
+                android:scrollbars="vertical"
+                android:text="새 추억을 추가하세요."
+                android:textSize="30sp"/>
 
         </LinearLayout>
 

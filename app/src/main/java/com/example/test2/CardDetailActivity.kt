@@ -62,9 +62,10 @@ class CardDetailActivity : AppCompatActivity() {
                                 val context = widget.context
                                 val phoneNumber = getContacts().firstOrNull { it.first == validName }?.second
 
-                                val intent = Intent(context, UserActivity::class.java).apply {
-                                    putExtra("name", validName)
-                                    putExtra("phone", phoneNumber)
+                                val intent = Intent(context, ContactDetailActivity::class.java).apply {
+                                    ContactDataHolder.name = validName
+                                    ContactDataHolder.phoneNumber = phoneNumber
+                                    ContactDataHolder.profileImagePath = ContactDataHolder.profileImagePath
                                 }
                                 context.startActivity(intent)
                             }
