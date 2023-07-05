@@ -32,7 +32,7 @@
 - 요청을 모두 허용 후, 앱 아이콘을 누르면, splash page를 통해 로고를 확인할 수 있습니다.
 
 <p align="center">
-  <img src="https://github.com/tylerkim1/Madcamp_1/assets/84979352/3461fc47-d84e-4ebd-aafd-e04a034a2c1a" width="200">
+  <img src="https://github.com/tylerkim1/Madcamp_1/assets/84979352/3461fc47-d84e-4ebd-aafd-e04a034a2c1a" width="300">
 </p>
 
 #### C. 연락처 탭
@@ -45,7 +45,7 @@
   - 문자 기본 텍스트 : 문득 사진을 보다가 생각이 나서 연락했어. 잘, 지내니?
 
 <p align="center">
-  <img src="https://github.com/tylerkim1/Madcamp_1/assets/84979352/8fb84ed1-b6f2-492f-b598-88cb979e40e6" width="200">
+  <img src="https://github.com/tylerkim1/Madcamp_1/assets/84979352/8fb84ed1-b6f2-492f-b598-88cb979e40e6" width="300">
 </p>
 
 #### D. 갤러리 탭
@@ -54,7 +54,7 @@
 - 사진에 액자 모양의 테두리와 그림자를 더해 입체감을 주었습니다. 
 
 <p align="center">
-  <img src="https://github.com/tylerkim1/Madcamp_1/assets/84979352/3d986740-3858-47a8-9a08-bc7e07b8545e" width="200">
+  <img src="https://github.com/tylerkim1/Madcamp_1/assets/84979352/3d986740-3858-47a8-9a08-bc7e07b8545e" width="300">
 </p>
 
 #### E. 추억 카드 탭
@@ -81,7 +81,7 @@
   - 만일 카드를 지우고 싶다면, 좌측 상단의 X 버튼을 눌러 카드를 삭제할 수 있습니다.
 
 <p align="center">
-  <img src="https://github.com/tylerkim1/Madcamp_1/assets/84979352/cac89c10-8c2a-47c5-94cf-867f063f84ba" width="200">
+  <img src="https://github.com/tylerkim1/Madcamp_1/assets/84979352/cac89c10-8c2a-47c5-94cf-867f063f84ba" width="300">
 </p>
 
 ### 3. 팀원 소개
