@@ -58,7 +58,6 @@ class ContactRecyclerViewAdapter(
         }
     }
 
-
     private fun saveBitmapToFile(bitmap: Bitmap): File? {
         val file = File(context.cacheDir, "profile_image.jpg")
         try {
@@ -72,9 +71,6 @@ class ContactRecyclerViewAdapter(
         }
         return null
     }
-
-
-
 
     override fun getItemCount(): Int {
         return contactList.size

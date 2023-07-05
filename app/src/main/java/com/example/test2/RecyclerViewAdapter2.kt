@@ -1,7 +1,6 @@
 package com.example.test2
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -13,7 +12,6 @@ import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
-import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,13 +19,17 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.test2.ContactDataHolder.profileImagePath
 import java.util.regex.Pattern
 
-class RecyclerViewAdapter2(private val context: Context, private val dataSet: ArrayList<Card>,
-                           private val newCardResultLauncher: ActivityResultLauncher<Intent>
+class RecyclerViewAdapter2(
+    private val context: Context,
+    private val dataSet: ArrayList<Card>,
+    private val dbHelper: CardDatabaseHelper,  // Add this line
+    private val newCardResultLauncher: ActivityResultLauncher<Intent>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -37,6 +39,7 @@ class RecyclerViewAdapter2(private val context: Context, private val dataSet: Ar
         private const val TYPE_EMPTY_CARD = 3
     }
 
+    private val cards = ArrayList<Card>()
     private val names = getContacts().map { it.first }.toTypedArray()
 
     private fun checkPermission3(): Boolean {
@@ -85,9 +88,25 @@ class RecyclerViewAdapter2(private val context: Context, private val dataSet: Ar
         val addCardButton: Button = view.findViewById(R.id.add_card_button)
     }
 
-    class CardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class CardViewHolder(view: View, private val onDelete: (position: Int) -> Unit) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.findViewById(R.id.item_details)
         val imageView: ImageView = view.findViewById(R.id.item_image)
+        val deleteButton: Button = view.findViewById(R.id.deleteButton)
+
+        init {
+            deleteButton.setOnClickListener {
+                val builder = AlertDialog.Builder(itemView.context)
+                builder.setTitle("Confirm Delete")
+                builder.setMessage("Are you sure you want to delete this card?")
+                builder.setPositiveButton("Yes") { dialog, _ ->
+                    onDelete(adapterPosition)
+                    dialog.dismiss()
+                }
+                builder.setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
+                val alert = builder.create()
+                alert.show()
+            }
+        }
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -103,7 +122,13 @@ class RecyclerViewAdapter2(private val context: Context, private val dataSet: Ar
         return when (viewType) {
             TYPE_EMPTY_CARD -> EmptyCardViewHolder(inflater.inflate(R.layout.tab3_emptycard_model, parent, false))
             TYPE_ADD_BUTTON -> AddCardViewHolder(inflater.inflate(R.layout.tab3_newcard_model, parent, false))
-            TYPE_CARD -> CardViewHolder(inflater.inflate(R.layout.tab3_card_model, parent, false))
+            TYPE_CARD -> CardViewHolder(inflater.inflate(R.layout.tab3_card_model, parent, false)) { position ->
+                val cardPosition = dataSet.size - position
+                val card = dataSet[cardPosition]
+                dbHelper.deleteCard(card)
+                dataSet.removeAt(cardPosition)
+                notifyItemRemoved(position)
+            }
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -179,12 +204,6 @@ class RecyclerViewAdapter2(private val context: Context, private val dataSet: Ar
                                 matcher.end(),
                                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                             )
-                            spannableString.setSpan(
-                                UnderlineSpan(),
-                                matcher.start(),
-                                matcher.end(),
-                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                            )
                         }
                     }
 
@@ -195,83 +214,5 @@ class RecyclerViewAdapter2(private val context: Context, private val dataSet: Ar
                 }
             }
         }
-//        if (getItemViewType(position) == TYPE_ADD_BUTTON) {
-//            (holder as AddCardViewHolder).addCardButton.setOnClickListener {
-//                val intent = Intent(context, NewCardActivity::class.java)
-//                newCardResultLauncher.launch(intent)
-//            }
-//        } else {
-//            val cardPosition = dataSet.size - position
-//            val card = dataSet[cardPosition]
-//
-//            holder.itemView.setOnClickListener {
-//                val intent = Intent(context, CardDetailActivity::class.java)
-//                intent.putExtra("imageUri", card.imageUri.toString()) // Uri를 String으로 변환하여 저장
-//                intent.putExtra("text", card.text)
-//                context.startActivity(intent)
-//            }
-//
-//            with(holder as CardViewHolder) {
-//                // Add image resource setting
-//                if (card.imageUri != null) {
-//                    imageView.setImageURI(card.imageUri)
-//                } else {
-//                    imageView.setImageResource(R.drawable.profile3) // 기본 템플릿 카드에 대한 기본 이미지 리소스 설정
-//                }
-//
-//                val inputText = card.text
-//                val pattern = Pattern.compile("@([\\w_]+)")
-//                val matcher = pattern.matcher(inputText)
-//
-//                val spannableString = SpannableStringBuilder(inputText)
-//
-//                while (matcher.find()) {
-//                    val mentionName = matcher.group(1)
-//                    val lastSpaceIndex = mentionName.lastIndexOf(' ')
-//                    val validName = if (lastSpaceIndex != -1) mentionName.substring(0, lastSpaceIndex) else mentionName
-//
-//                    if (names.contains(validName)) {
-//                        val clickableSpan = object : ClickableSpan() {
-//                            override fun onClick(widget: View) {
-//                                val context = widget.context
-//                                val phoneNumber = getContacts().firstOrNull { it.first == validName }?.second
-//
-//                                val intent = Intent(context, ContactDetailActivity::class.java).apply {
-//                                    ContactDataHolder.name = validName
-//                                    ContactDataHolder.phoneNumber = phoneNumber
-//                                    ContactDataHolder.profileImagePath = profileImagePath
-//                                }
-//                                context.startActivity(intent)
-//
-//                            }
-//                        }
-//
-//                        spannableString.setSpan(
-//                            clickableSpan,
-//                            matcher.start(),
-//                            matcher.end(),
-//                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-//                        )
-//                        spannableString.setSpan(
-//                            ForegroundColorSpan(Color.BLUE),
-//                            matcher.start(),
-//                            matcher.end(),
-//                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-//                        )
-//                        spannableString.setSpan(
-//                            UnderlineSpan(),
-//                            matcher.start(),
-//                            matcher.end(),
-//                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-//                        )
-//                    }
-//                }
-//
-//                textView.apply {
-//                    text = spannableString
-//                    movementMethod = LinkMovementMethod.getInstance()
-//                }
-//            }
-//        }
     }
 }

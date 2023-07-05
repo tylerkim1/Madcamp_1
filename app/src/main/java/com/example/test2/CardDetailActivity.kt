@@ -30,6 +30,8 @@ class CardDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCardDetailBinding
     private lateinit var names: Array<String>
     private val PERMISSIONS_REQUEST_READ_CONTACTS = 100
+    private var oldCard: Card? = null
+    private val cardDatabaseHelper = CardDatabaseHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,12 +43,36 @@ class CardDetailActivity : AppCompatActivity() {
         val imageUri = intent.getStringExtra("imageUri")?.let { Uri.parse(it) } // String을 Uri로 변환
         val inputText = intent.getStringExtra("text")
 
+        // 이전 카드를 저장합니다.
+        oldCard = if (imageUri != null && inputText != null) {
+            Card(imageUri, inputText)
+        } else {
+            null
+        }
+
         if (imageUri != null && inputText != null) {
             Glide.with(this).load(imageUri).into(binding.imageDetail)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), PERMISSIONS_REQUEST_READ_CONTACTS)
             } else {
+
+                binding.editButton.setOnClickListener {
+                    binding.textDetail.isEnabled = true // TextView를 수정 가능하게 만듭니다.
+                    binding.saveButton.visibility = View.VISIBLE // 저장 버튼을 보이게 합니다.
+                }
+
+                binding.saveButton.setOnClickListener {
+                    binding.textDetail.isEnabled = false // TextView를 다시 수정 불가능하게 만듭니다.
+                    binding.saveButton.visibility = View.GONE // 저장 버튼을 숨깁니다.
+                    // 여기에서 텍스트 변경사항을 저장하세요.
+                    val newText = binding.textDetail.text.toString()
+                    val oldCard = getYourOldCard() // 이전 카드를 가져옵니다. 이것은 데이터베이스에서 해당 카드를 찾는데 사용되는 이미지 URI와 이전 텍스트를 가지고 있어야 합니다.
+                    oldCard?.let { card ->
+                        cardDatabaseHelper.updateCardText(newText, card)
+                    }
+                }
+
                 val pattern = Pattern.compile("@([\\w_]+)")  // Handle Korean names, English letters, spaces, parentheses, numbers and special characters
                 val matcher = pattern.matcher(inputText)
                 val spannableString = SpannableStringBuilder(inputText)
@@ -83,12 +109,6 @@ class CardDetailActivity : AppCompatActivity() {
                             matcher.end(),
                             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
-                        spannableString.setSpan(
-                            UnderlineSpan(),
-                            matcher.start(),
-                            matcher.end(),
-                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                        )
                     }
                 }
 
@@ -100,6 +120,10 @@ class CardDetailActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun getYourOldCard(): Card? {
+        return oldCard
     }
 
     private fun getContacts(): ArrayList<Pair<String, String>> {
