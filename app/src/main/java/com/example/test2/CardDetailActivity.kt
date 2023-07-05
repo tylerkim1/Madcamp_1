@@ -83,12 +83,6 @@ class CardDetailActivity : AppCompatActivity() {
                             matcher.end(),
                             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
-                        spannableString.setSpan(
-                            UnderlineSpan(),
-                            matcher.start(),
-                            matcher.end(),
-                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                        )
                     }
                 }
 

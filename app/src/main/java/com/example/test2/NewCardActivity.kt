@@ -12,6 +12,8 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.text.Editable
@@ -38,6 +40,7 @@ class NewCardActivity : AppCompatActivity() {
     private var selectedImageUri: Uri? = null
     private val PERMISSIONS_REQUEST_READ_CONTACTS = 100
     private var fullText: String = ""
+    var oldTextLength = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,13 +66,38 @@ class NewCardActivity : AppCompatActivity() {
 
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                     fullText = s.toString()  // 텍스트가 변경되기 전에 전체 텍스트를 백업합니다.
+                    oldTextLength = s.length
                 }
 
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                     if (s.isNotEmpty() && s[s.length - 1] == '@') {
                         adapter.getFilter().filter(null)
                     }
+                    if (s.length < oldTextLength) { //지워졌을 때
+
+                        val mentionsPattern = Pattern.compile("@[\\w_]+")
+                        val matcher = mentionsPattern.matcher(s)
+
+                        var lastMentionStart = -1
+                        var lastMentionEnd = -1
+
+                        while (matcher.find()) {
+                            lastMentionStart = matcher.start()
+                            lastMentionEnd = matcher.end()
+                        }
+
+                        // If the text ends with a '@mention', remove the mention
+                        if (lastMentionStart != -1 && lastMentionEnd == s.length) {
+                            val handler = Handler(Looper.getMainLooper())
+                            handler.post {
+                                val editable = binding.editText.text
+                                editable.delete(lastMentionStart, lastMentionEnd)
+                            }
+                        }
+                    }
+                    oldTextLength = s.length
                 }
+
             })
 
             binding.editText.setOnItemClickListener { _, _, position, _ ->
@@ -88,22 +116,24 @@ class NewCardActivity : AppCompatActivity() {
                     val spannableString = SpannableStringBuilder(newText)
 
                     while (matcher.find()) {
+                        if (matcher.start() < spannableString.length && matcher.end() <= spannableString.length) {
                             spannableString.setSpan(
                                 ForegroundColorSpan(Color.BLUE),
                                 matcher.start(),
                                 matcher.end(),
                                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                             )
-                            spannableString.setSpan(
-                                UnderlineSpan(),
-                                matcher.start(),
-                                matcher.end(),
-                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                            )
+                        }
                     }
 
                     binding.editText.setText(spannableString)
-                    binding.editText.setSelection(newText.length) // Move cursor to the end of the text
+                    val newTextLength = newText.length
+                    val editTextLength = binding.editText.text.length
+                    if (newTextLength <= editTextLength) {
+                        binding.editText.setSelection(newTextLength)
+                    } else {
+                        binding.editText.setSelection(editTextLength)
+                    }
                 }
             }
         }

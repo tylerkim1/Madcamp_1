@@ -4,17 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.method.ScrollingMovementMethod
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import kotlin.properties.Delegates
 
 class ThirdFragment : Fragment() {
 
@@ -64,7 +61,7 @@ class ThirdFragment : Fragment() {
         layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
 
-        adapter = RecyclerViewAdapter2(requireContext(), cards, newCardResultLauncher)
+        adapter = RecyclerViewAdapter2(requireContext(), cards, dbHelper, newCardResultLauncher)
         recyclerView.adapter = adapter
     }
 

@@ -4,10 +4,10 @@
             <corners android:radius="10dp" />
             <solid android:color="@color/white" />
             <stroke
-                android:color="#B4B4B4"
-                android:width="3dp"
+                android:color="#d8d5cc"
+                android:width="2dp"
                 android:radius="30dp"
-                android:dashWidth="15dp"
+                android:dashWidth="10dp"
                 android:dashGap="10dp" />
         </shape>
     </item>

@@ -39,6 +39,27 @@ class CardDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
         db.close()
     }
 
+    fun deleteCard(card: Card) {
+        val db = this.writableDatabase
+        val selectionArgs = arrayOf(card.imageUri.toString(), card.text)
+        db.delete(TABLE_CARDS, "$COLUMN_IMAGE_URI = ? AND $COLUMN_TEXT = ?", selectionArgs)
+        db.close()
+    }
+
+    fun updateCardText(newText: String, oldCard: Card) {
+        val values = ContentValues().apply {
+            put(COLUMN_IMAGE_URI, oldCard.imageUri.toString())
+            put(COLUMN_TEXT, newText)
+        }
+
+        val db = this.writableDatabase
+
+        val selectionArgs = arrayOf(oldCard.imageUri.toString(), oldCard.text)
+        db.update(TABLE_CARDS, values, "$COLUMN_IMAGE_URI = ? AND $COLUMN_TEXT = ?", selectionArgs)
+
+        db.close()
+    }
+
     @SuppressLint("Range")
     fun getAllCards(): List<Card> {
         val db = this.readableDatabase
