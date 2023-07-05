@@ -104,3 +104,7 @@
 - 디자인: figma
 - TOOL : Android Studio
 - Kotlin, Java
+  
+
+### 5. 다운로드
+https://drive.google.com/file/d/1MK5QotesEqa9Sb-AC1uqlt_eNIvZlCcv/view
