@@ -198,7 +198,8 @@ class RecyclerViewAdapter2(
                                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                             )
                             spannableString.setSpan(
-                                ForegroundColorSpan(Color.rgb(64,46,0)),
+
+                                ForegroundColorSpan(Color.rgb(239,129,0)),
                                 matcher.start(),
                                 matcher.end(),
                                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE

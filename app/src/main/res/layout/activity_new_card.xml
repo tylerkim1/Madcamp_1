@@ -28,6 +28,7 @@
         android:text="추억 고르기" />
 
     <AutoCompleteTextView
+        android:lineSpacingExtra="8dp"
         android:fontFamily="@font/nanum"
         android:id="@+id/editText"
         android:layout_width="match_parent"

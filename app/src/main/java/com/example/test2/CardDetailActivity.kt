@@ -78,7 +78,7 @@ class CardDetailActivity : AppCompatActivity() {
                             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
                         spannableString.setSpan(
-                            ForegroundColorSpan(Color.BLUE),
+                            ForegroundColorSpan(Color.rgb(239,129,0)),
                             matcher.start(),
                             matcher.end(),
                             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE

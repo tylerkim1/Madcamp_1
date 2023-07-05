@@ -118,7 +118,7 @@ class NewCardActivity : AppCompatActivity() {
                     while (matcher.find()) {
                         if (matcher.start() < spannableString.length && matcher.end() <= spannableString.length) {
                             spannableString.setSpan(
-                                ForegroundColorSpan(Color.BLUE),
+                                ForegroundColorSpan(Color.rgb(239,129,0)),
                                 matcher.start(),
                                 matcher.end(),
                                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
