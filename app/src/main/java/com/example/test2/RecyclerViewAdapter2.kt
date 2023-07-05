@@ -276,3 +276,4 @@ class RecyclerViewAdapter2(private val context: Context, private val dataSet: Ar
 //        }
     }
 }
+    }
