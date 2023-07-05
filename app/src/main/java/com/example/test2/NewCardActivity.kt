@@ -7,6 +7,7 @@ import android.R
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -14,15 +15,23 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.text.Editable
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.UnderlineSpan
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.test2.databinding.ActivityNewCardBinding
+import java.util.regex.Pattern
 
 class NewCardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewCardBinding
@@ -70,8 +79,30 @@ class NewCardActivity : AppCompatActivity() {
                     val startText = fullText.substring(0, atIndex) // this is the text before last '@'
                     val spaceIndex = fullText.indexOf(' ', atIndex)
                     val remainingText = if (spaceIndex != -1) fullText.substring(spaceIndex) else "" // this is the text after the space following '@' if exists
-                    val newText = "$startText@$selectedContact $remainingText" // combine all
-                    binding.editText.setText(newText)
+                    val mentionText = "@$selectedContact"
+                    val newText = "$startText$mentionText $remainingText" // combine all
+
+                    val pattern = Pattern.compile("@([\\w_]+)")
+                    val matcher = pattern.matcher(newText)
+
+                    val spannableString = SpannableStringBuilder(newText)
+
+                    while (matcher.find()) {
+                            spannableString.setSpan(
+                                ForegroundColorSpan(Color.BLUE),
+                                matcher.start(),
+                                matcher.end(),
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                            )
+                            spannableString.setSpan(
+                                UnderlineSpan(),
+                                matcher.start(),
+                                matcher.end(),
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                            )
+                    }
+
+                    binding.editText.setText(spannableString)
                     binding.editText.setSelection(newText.length) // Move cursor to the end of the text
                 }
             }
