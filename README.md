@@ -94,9 +94,9 @@
 ### 4. 역할
 |이름|심수연|김태형|
 |:------:|:-----|:-----|
-|TAB 1| 연락처 접근 권한, 연락처 목록 layout, 연락처 detail layout| JSON 파일 |
-|TAB 2| 미디어 접근 권한, 갤러리 layout, 사진 detail 축소/확대 ||
-|TAB 3| 기본/상세 layout ||
+|TAB 1| 연락처 접근 권한, 연락처 목록 layout, 연락처 detail layout| JSON 파일, 연락처 detail page 연결 |
+|TAB 2| 미디어 접근 권한, 갤러리 layout, 사진 detail 축소/확대 | - |
+|TAB 3| 기본/상세 layout | 카드 추가/삭제, 카드 detail page 연결, 멘션, 이름 자동완성 |
 
 
 
