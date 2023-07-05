@@ -24,7 +24,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.test2.ContactDataHolder.profileImagePath
 import java.util.regex.Pattern
-
+object ContactDataHolder2 {
+    var name: String? = null
+    var phoneNumber: String? = null
+    var profileImagePath: String? = null
+}
 class RecyclerViewAdapter2(
     private val context: Context,
     private val dataSet: ArrayList<Card>,
@@ -181,11 +185,12 @@ class RecyclerViewAdapter2(
                                 override fun onClick(widget: View) {
                                     val context = widget.context
                                     val phoneNumber = getContacts().firstOrNull { it.first == validName }?.second
-
+                                    val profileImagePath = ContactDataHolder.profileImagePath
                                     val intent = Intent(context, ContactDetailActivity::class.java).apply {
                                         ContactDataHolder.name = validName
                                         ContactDataHolder.phoneNumber = phoneNumber
                                         ContactDataHolder.profileImagePath = profileImagePath
+
                                     }
                                     context.startActivity(intent)
 

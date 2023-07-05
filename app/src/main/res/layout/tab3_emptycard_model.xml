@@ -24,12 +24,13 @@
             android:orientation="horizontal">
 
             <TextView
+                android:fontFamily="@font/nanum"
                 android:id="@+id/item_details"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:scrollbars="vertical"
-                android:text="새 추억을 추가하세요."
+                android:text="새 추억을 남겨보세요."
                 android:textSize="30sp"/>
 
         </LinearLayout>
