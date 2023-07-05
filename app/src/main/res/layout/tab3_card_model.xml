@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
 
-        android:background="@color/three" >
+        android:background="@drawable/profile_shadow" >
 
 
         <LinearLayout
