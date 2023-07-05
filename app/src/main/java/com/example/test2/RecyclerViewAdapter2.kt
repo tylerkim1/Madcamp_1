@@ -91,7 +91,6 @@ class RecyclerViewAdapter2(private val context: Context, private val dataSet: Ar
     }
 
     override fun getItemViewType(position: Int): Int {
-//        return if (position == 0) TYPE_ADD_BUTTON else TYPE_CARD
         return when {
             dataSet.isEmpty() && position == 1 -> TYPE_EMPTY_CARD
             position == 0 -> TYPE_ADD_BUTTON
