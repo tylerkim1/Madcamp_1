@@ -5,14 +5,25 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="20dp"
-    app:cardCornerRadius="5dp"
-   android:background="@drawable/border_outer"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp"
+
     app:cardBackgroundColor="#FFFFFF"
     app:cardUseCompatPadding="true"
 
     >
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/profile_shadow"
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginRight="3dp"
+    android:layout_marginBottom="3dp"
+    android:background="@drawable/border_outer"
+    >
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,6 +42,8 @@
         android:scaleType="centerCrop"
         android:src = "@drawable/logo"
         />
-</FrameLayout>
 
+</FrameLayout>
+</LinearLayout>
+</LinearLayout>
 </androidx.cardview.widget.CardView>

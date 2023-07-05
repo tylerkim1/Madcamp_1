@@ -8,7 +8,7 @@
         </shape>
     </item>
     <!-- Background Shape -->
-    <item  android:right="5dp" android:bottom="5dp" >
+    <item  android:right="3dp" android:bottom="3dp" >
         <shape>
             <solid android:color="#FFFFFF" />
             <corners android:radius="10dp" />

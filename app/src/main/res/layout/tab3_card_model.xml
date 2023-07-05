@@ -23,8 +23,8 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="3dp"
             android:background="@drawable/background_rectangle">
 
             <ImageView
@@ -43,7 +43,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
-
+                android:fontFamily="@font/nanum"
                 android:layout_marginBottom="20dp"
                 android:scrollbars="vertical"
                 android:text="This is the item details"

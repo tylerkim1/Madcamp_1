@@ -7,6 +7,7 @@
     app:cardCornerRadius="30dp"
     app:cardElevation="6dp"
     android:layout_margin="15dp"
+    app:cardBackgroundColor="@color/three"
     android:foreground="?selectableItemBackground"
     android:clickable="true" >
 
@@ -20,6 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="3dp"
             android:background="@drawable/background_rectangle"
             android:orientation="horizontal" >
 
